@@ -5,8 +5,8 @@ from clinic.models import Clinic
 class Patient(models.Model):
      name = models.CharField(max_length=150)
      age = models.IntegerField()
-     clinic_id = models.ForeignKey(Clinic,on_delete=models.CASCADE)
-     doctor_id = models.ForeignKey(Doctor,on_delete=models.CASCADE)
+     clinic = models.ForeignKey(Clinic,on_delete=models.CASCADE)
+     doctor = models.ForeignKey(Doctor,on_delete=models.CASCADE)
 
      def __str__(self):
          return self.name
