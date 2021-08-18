@@ -1,5 +1,4 @@
 from rest_framework import serializers
-<<<<<<< HEAD
 from rest_framework import fields
 from .models import *
 from datetime import date, time
@@ -10,16 +9,18 @@ from rest_framework.exceptions import APIException
 from django.utils.encoding import force_text
 from rest_framework import status
 from patient.models import PatientInformation
+from .models import *
+from doctor.serializers import DoctorSerializer
+from clinic.serializers import ClinicSerializer
+
 
 
 class PatientInformationSerializer(serializers.ModelSerializer):
     class Meta:
         model = PatientInformation
         fields = '__all__'
-=======
-from .models import *
-from doctor.serializers import DoctorSerializer
-from clinic.serializers import ClinicSerializer
+
+
 
 class PatientSerializer(serializers.ModelSerializer):
      class Meta:
@@ -34,4 +35,3 @@ class PatientSerializer(serializers.ModelSerializer):
 
      def get_doctors_title(self, obj):
           return obj.doctor.title
->>>>>>> 9a91fc210ae56c9fbf61a149780992529b190772
