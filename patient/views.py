@@ -40,3 +40,15 @@ def list_patients_orm(request):
      patient_serializer = PatientSerializer(patients , many=True)
      data = {"response id": '0' ,"data": patient_serializer.data}
      return Response(data)
+
+
+@api_view(['GET', ])
+def search_patients_orm(request , clinic_id_from ,clinic_id_to , doctor_id_from , doctor_id_to , patient_id_from, patient_id_to):
+     
+     patients = Patient.objects.filter(clinic__gte=clinic_id_from ,clinic__lte =clinic_id_to ,
+      doctor__gte=doctor_id_from , doctor__lte= doctor_id_to,
+      id__gte = patient_id_from ,id__lte = patient_id_to)
+      
+     patient_serializer = PatientSerializer(patients , many=True)
+     data = {"response id": '0' ,"data": patient_serializer.data}
+     return Response(data)

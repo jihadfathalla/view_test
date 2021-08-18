@@ -5,12 +5,8 @@ from patient import views
 app_name= 'patient'
 
 urlpatterns =[
-<<<<<<< HEAD
      path('list/patients_informations', views.list_patients_information),
-     # path('patients_informations/<int:first_clinic_id>/<int:second_clinic_id>/<int:first_doctor_id>/<int:second_doctor_id>/<int:first_patient_id>/<int:second_patient_id>', views.patients_informations),
-=======
-     path('list/patients_informations', views.list_patients_informations),
      path('list/patients-orm', views.list_patients_orm , name='list-patients-orm'),
+     path('search/patients-orm/<int:clinic_id_from>/<int:clinic_id_to>/<int:doctor_id_from>/<int:doctor_id_to>/<int:patient_id_from>/<int:patient_id_to>', views.search_patients_orm , name='search-patients-orm'),
 
->>>>>>> 9a91fc210ae56c9fbf61a149780992529b190772
 ]
