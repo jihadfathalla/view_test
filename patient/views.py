@@ -15,7 +15,8 @@ def list_patients_informations(request):
 
 @api_view(['GET', ])
 def list_patients_orm(request):
-     patients = Patient.objects.all().order_by('id')[:100]
+     patients = Patient.objects.all()
      patient_serializer = PatientSerializer(patients , many=True)
      data = {"response id": '0' ,"data": patient_serializer.data}
      return Response(data)
+     
