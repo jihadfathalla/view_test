@@ -15,11 +15,12 @@ class Patient(models.Model):
 
 
 class PatientInformation(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     PName = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     title= models.CharField(max_length=200)
     age= models.IntegerField()
-    clinic_id = models.IntegerField()
+    clinic_id= models.IntegerField()
     doctor_id = models.IntegerField()
     class Meta:
         managed = False
