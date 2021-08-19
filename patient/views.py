@@ -19,25 +19,12 @@ def list_patients_information(request):
      return Response(data)
 
 @api_view(['GET', ])
-def test_procedure(request):
-     # cursor = connection.cursor
-     # cursor.excute(call 'PatientFullInfoSP()')
-     # result = cursor.fetchall()
-     # c = connection.cursor()
-     # c.execute("BEGIN")
-     # c.callproc("PatientFullInfoSP")
-     # results = c.fetchall()
-     # c.execute("COMMIT")
-     # c.close()
-     # print (results)
-     # return Response(results)
-
+def test_procedure(request, clinic_id_from ,clinic_id_to , doctor_id_from , doctor_id_to , patient_id_from, patient_id_to):
      cursor = connection.cursor()
      try:
-          cursor.execute('CALL  PatientFullInfoSP()')
-          print("*****************************************",cursor.description)
+          # cursor.execute('select * from some_function_2(%s,%s,%s,%s,%s,%s)',(clinic_id_from ,clinic_id_to , doctor_id_from , doctor_id_to , patient_id_from, patient_id_to))
+          cursor.execute('select * from get_film()')
           result_set = cursor.fetchall()
-          print(result_set)
           return Response(result_set)
      finally:
           cursor.close()
