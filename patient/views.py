@@ -48,19 +48,33 @@ def test_procedure(request):
 
 
 
-# def patients_informations(request,first_clinic_id,second_clinic_id, first_doctor_id,second_doctor_id, first_patient_id,second_patient_id):
-#      patients_information = PatientInformation.objects.filter(clinic_id__gte=first_clinic_id,clinic_id__lte=second_clinic_id,
-#      doctor_id__gte=first_doctor_id,doctor_id__lte=second_doctor_id,
-#      id__gte=first_patient_id,id__lte=second_patient_id)
-#      print(patients_information)
-#      pass
+@api_view(['GET', ])
+def search_patients_view(request , clinic_id_from ,clinic_id_to , doctor_id_from , doctor_id_to , patient_id_from, patient_id_to):
+     
+     patients = PatientInformation.objects.filter(clinic_id__gte=clinic_id_from ,clinic_id__lte =clinic_id_to ,
+      doctor_id__gte=doctor_id_from , doctor_id__lte= doctor_id_to,
+      id__gte = patient_id_from ,id__lte = patient_id_to)
+      
+     patient_serializer = PatientInformationSerializer(patients , many=True)
+     data = {"response id": '0' ,"data": patient_serializer.data}
+     return Response(data)
 
-     # print(patients_information)
-     # pass
 
 @api_view(['GET', ])
 def list_patients_orm(request):
-     patients = Patient.objects.all().order_by('id')[:100]
+     patients = Patient.objects.all()
+     patient_serializer = PatientSerializer(patients , many=True)
+     data = {"response id": '0' ,"data": patient_serializer.data}
+     return Response(data)
+
+
+@api_view(['GET', ])
+def search_patients_orm(request , clinic_id_from ,clinic_id_to , doctor_id_from , doctor_id_to , patient_id_from, patient_id_to):
+     
+     patients = Patient.objects.filter(clinic__gte=clinic_id_from ,clinic__lte =clinic_id_to ,
+      doctor__gte=doctor_id_from , doctor__lte= doctor_id_to,
+      id__gte = patient_id_from ,id__lte = patient_id_to)
+      
      patient_serializer = PatientSerializer(patients , many=True)
      data = {"response id": '0' ,"data": patient_serializer.data}
      return Response(data)

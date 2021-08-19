@@ -14,6 +14,9 @@ from doctor.serializers import DoctorSerializer
 from clinic.serializers import ClinicSerializer
 
 
+from doctor.serializers import DoctorSerializer
+from clinic.serializers import ClinicSerializer
+
 
 class PatientInformationSerializer(serializers.ModelSerializer):
     class Meta:
