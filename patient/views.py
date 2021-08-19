@@ -11,6 +11,21 @@ from django.db import connection
 
 
 
+
+class CursorByName():
+    def __init__(self, cursor):
+        self._cursor = cursor
+    
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        row = self._cursor.__next__()
+
+        return { description[0]: row[col] for col, description in enumerate(self._cursor.description) }
+    
+
+
 @api_view(['GET', ])
 def list_patients_information(request): 
      patients_information = PatientInformation.objects.all().order_by('id')[:100]
@@ -19,26 +34,28 @@ def list_patients_information(request):
      return Response(data)
 
 @api_view(['GET', ])
-def test_procedure(request):
-     # cursor = connection.cursor
-     # cursor.excute(call 'PatientFullInfoSP()')
-     # result = cursor.fetchall()
-     # c = connection.cursor()
-     # c.execute("BEGIN")
-     # c.callproc("PatientFullInfoSP")
-     # results = c.fetchall()
-     # c.execute("COMMIT")
-     # c.close()
-     # print (results)
-     # return Response(results)
-
+def test_procedure(request, clinic_id_from ,clinic_id_to , doctor_id_from , doctor_id_to , patient_id_from, patient_id_to):
      cursor = connection.cursor()
      try:
-          cursor.execute('CALL  PatientFullInfoSP()')
-          print("*****************************************",cursor.description)
-          result_set = cursor.fetchall()
-          print(result_set)
-          return Response(result_set)
+          # cursor.execute('select * from some_function_2(%s,%s,%s,%s,%s,%s)',(clinic_id_from ,clinic_id_to , doctor_id_from , doctor_id_to , patient_id_from, patient_id_to))
+          cursor.execute('select * from get_film()')
+          # result_set = cursor.fetchall()
+          # return Response(result_set)
+
+          # for result in cursor.description:
+          # print("****************************************",cursor.description )
+          # ret_list = []
+          # num_tables =0
+          # ret=cursor.fetchall()   
+          # if len(ret)>0: 
+          #      ret_list.append(ret)
+          #      num_tables+=1
+          #      print(ret) 
+          #      return ret.fetchall()
+                    
+          for row in CursorByName(cursor):
+               print(row)
+
      finally:
           cursor.close()
 
